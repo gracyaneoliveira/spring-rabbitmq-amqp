@@ -1,6 +1,6 @@
 # Mensageria com Spring AMQP
 
-**Aplicação desenvolvida no canal da Algaworks no [vídeo](https://www.youtube.com/watch?v=SzcvuHjRJKE). Uma introdução ao RabbitMQ**
+**Aplicação desenvolvida no canal da Algaworks no [vídeo](https://www.youtube.com/watch?v=SzcvuHjRJKE). Uma introdução ao RabbitMQ.**
 
 Três aplicações Spring:
 - **order-service** (Api - produtor)
