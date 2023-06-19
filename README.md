@@ -27,4 +27,17 @@ pass: rabbitmq
 
 ![Exchange](exchange.png)
 
+**Dead-Letter Queue**
 
+Fila que contém mensagens que falharam no processamento. Podemos ter também uma DLX (Dead Letter Exchange) ligada a uma DLQ.
+
+Uma vez que a mensagem vai para a DLQ podemos utilizar um plugin no rabbitmq para repor essas mensagens na fila principal para novo processamento.
+Além dos plugins também podemos utilizamos o reprocessamento programaticamente. Para este último caso devemos desativar a configuração no .yml referente ao reprocessamento(retry) automático
+e fazer essa configuração do retry programaticamente com um Listener para o DLQ. 
+
+Caso o reprocessamento das mensagens ainda gerem mensagens com erro e elas não puderem ser descartadas, podemos guardá-las em um banco de dados ou enviar essas mensagens para uma outra fila. Existe um conceito chamado ParkingLot que é uma fila que contém mensagens que já passaram pelo retry (as mensagens falharam no retry)
+e não podem ser descartadas.
+
+O retry nesse exemplo foi simulado na aplicação **cashback-service**. A DeadLetterQueueListener.java trata o **retry** programaticamente e o **ParkingLot**.
+
+![Dead-Letter Queue](dead-letter-queue.png)

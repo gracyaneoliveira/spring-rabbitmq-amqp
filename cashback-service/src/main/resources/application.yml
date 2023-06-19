@@ -7,3 +7,11 @@ spring:
     port: 5672
     username: rabbitmq
     password: rabbitmq
+    listener:
+      simple:
+        default-requeue-rejected: 'false'
+#        retry:
+#          enabled: 'true'
+#          max-attempts: '3'
+#          initial-interval: 5s
+#          multiplier: '2'
