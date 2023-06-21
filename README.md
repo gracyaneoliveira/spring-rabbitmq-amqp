@@ -41,3 +41,9 @@ e não podem ser descartadas.
 O retry nesse exemplo foi simulado na aplicação **cashback-service**. A DeadLetterQueueListener.java trata o **retry** programaticamente e o **ParkingLot**.
 
 ![Dead-Letter Queue](dead-letter-queue.png)
+
+**Como priorizar o processamento de uma mensagem no RabbitMQ**
+
+Uma mensagem que deve ser priorizada com relação as demais deve carregar uma informação de prioridade para que o rabbitmq reordene a fila de mensagens com relação a prioridade de cada mensagem. O produtor da mensagem é que aplica essa prioridade as mensagens.
+
+![Prioridade](prioridade.png)

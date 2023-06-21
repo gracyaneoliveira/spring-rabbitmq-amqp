@@ -24,6 +24,7 @@ public class RabbitMQConfig {
     public Queue queueCashback() {
         Map<String, Object> args = new HashMap<>();
         args.put("x-dead-letter-exchange", "orders.v1.order-created.dlx");
+        args.put("x-max-priority", 10);
 //        Enviaria direto para a queue sem passar pela exchange
 //        args.put("x-dead-letter-routing-key", "orders.v1.order-created.dlx.generate-cashback.dlq");
         return new Queue("orders.v1.order-created.generate-cashback", true, false, false, args);

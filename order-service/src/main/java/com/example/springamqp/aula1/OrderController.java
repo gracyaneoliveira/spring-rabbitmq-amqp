@@ -1,9 +1,12 @@
 package com.example.springamqp.aula1;
 
+import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 @RestController
@@ -19,8 +22,22 @@ public class OrderController {
 	@PostMapping
 	public Order create(@RequestBody Order order) {
 		orders.save(order);
+
+		final int priority;
+		if (order.getValue().compareTo(new BigDecimal("10000")) >= 0) {
+			priority = 5;
+		} else {
+			priority = 1;
+		}
+
+		final MessagePostProcessor processor = message -> {
+			var messageProperties = message.getMessageProperties();
+			messageProperties.setPriority(priority);
+			return message;
+		};
+
 		OrderCreatedEvent event = new OrderCreatedEvent(order.getId(), order.getValue());
-		rabbitTemplate.convertAndSend("orders.v1.order-created","" , event);
+		rabbitTemplate.convertAndSend("orders.v1.order-created","" , event, processor);
 		return order;
 	}
 
